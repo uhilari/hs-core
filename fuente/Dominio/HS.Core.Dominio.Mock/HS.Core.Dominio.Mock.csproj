@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <RootNamespace>HS</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.7.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HS.Core.Dominio\HS.Core.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>
