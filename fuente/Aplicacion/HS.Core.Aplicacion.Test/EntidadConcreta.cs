@@ -10,5 +10,16 @@ namespace HS
   {
     public string Cadena { get; set; }
     public int Entero { get; set; }
+    public EntidadEstatic Estatica { get; set; }
+  }
+
+  public class EntidadEstatic : EntityBase
+  {
+    public decimal Real { get; set; }
+
+    public void SetId(Guid id)
+    {
+      base.Id = id;
+    }
   }
 }

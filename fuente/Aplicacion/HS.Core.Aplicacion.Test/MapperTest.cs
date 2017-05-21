@@ -28,7 +28,9 @@ namespace HS.Core.Aplicacion.Test
 
       public CrearDto()
       {
-        _entidad = new EntidadConcreta { Cadena = "Texto", Entero = 5 };
+        var estatica = new EntidadEstatic();
+        estatica.SetId(Guid.Parse("31e7cfef-c354-407b-b6ed-60b5240debaa"));
+        _entidad = new EntidadConcreta { Cadena = "Texto", Entero = 5, Estatica = estatica };
       }
 
       [Fact]
@@ -59,6 +61,41 @@ namespace HS.Core.Aplicacion.Test
         Mapper.PonerDtoPropiedad();
         var dto = Mapper.CrearDto(_entidad);
         Assert.Equal("Texto", dto.Cadena);
+      }
+
+      [Fact]
+      public void ValorReferencia()
+      {
+        Mapper.PonerDtoEnlace();
+        var dto = Mapper.CrearDto(_entidad);
+        Assert.Equal("78-nMVTDe0C27WC1JA3rqg", dto.IdEstatica);
+      }
+    }
+
+    public class CrearEntity: Base
+    {
+      public DtoConcreta _dto;
+
+      public CrearEntity()
+      {
+        _dto = new DtoConcreta { Cadena = "Texto", IdEstatica = "78-nMVTDe0C27WC1JA3rqg" };
+      }
+
+      [Fact]
+      public void EntidadNoNull()
+      {
+        var entidad = Mapper.CrearEntity(_dto);
+        Assert.NotNull(entidad);
+      }
+
+      [Fact]
+      public void ValorReferencia()
+      {
+        Mapper.PonerEntityEnlace();
+        Repository.Setup(c => c.Get<EntidadEstatic>(Guid.Parse("31e7cfef-c354-407b-b6ed-60b5240debaa")))
+          .Returns(new EntidadEstatic());
+        var entidad = Mapper.CrearEntity(_dto);
+        Assert.NotNull(entidad.Estatica);
       }
     }
   } 

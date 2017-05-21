@@ -21,5 +21,15 @@ namespace HS
     {
       DestinoDto(c => c.Cadena).Funcion(c => c.Cadena);
     }
+
+    public void PonerDtoEnlace()
+    {
+      ReferenciaDto(c => c.IdEstatica).Referencia(c => c.Estatica);
+    }
+
+    public void PonerEntityEnlace()
+    {
+      ReferenciaEntity(c => c.Estatica).Referencia(c => c.IdEstatica);
+    }
   }
 }

@@ -30,10 +30,27 @@ namespace HS
       return destino;
     }
 
+    protected IDestinoDtoReferencia<TEntity> ReferenciaDto(Expression<Func<TDto, string>> expression)
+    {
+      var propiedad = LambdaHelper.GetPropertyInfo(expression);
+      var destino = new DestinoDtoReferencia<TEntity>(propiedad);
+      _dtoDestinos.Add(propiedad.Name, destino);
+      return destino;
+    }
+
     protected IDestino<S, TDto> DestinoEntity<S>(Expression<Func<TEntity, S>> expression)
     {
       var propiedad = LambdaHelper.GetPropertyInfo(expression);
       var destino = new Destino<S, TDto>(propiedad);
+      _entityDestinos.Add(propiedad.Name, destino);
+      return destino;
+    }
+
+    protected IDestinoEntityReferencia<S, TDto> ReferenciaEntity<S>(Expression<Func<TEntity, S>> expression)
+      where S: EntityBase
+    {
+      var propiedad = LambdaHelper.GetPropertyInfo(expression);
+      var destino = new DestinoEntityReferencia<S, TDto>(propiedad, _repository);
       _entityDestinos.Add(propiedad.Name, destino);
       return destino;
     }
@@ -54,6 +71,17 @@ namespace HS
             _dtoDestinos.Add(prop.Name, new Destino<object, TEntity>(prop).Propiedad(propEntidad));
           if (!_entityDestinos.Keys.Any(c => c == prop.Name))
             _entityDestinos.Add(prop.Name, new Destino<object, TDto>(propEntidad).Propiedad(prop));
+        }
+        else if (prop.Name.Substring(0, 2) == "Id")
+        {
+          propEntidad = typeof(TEntity).GetProperty(prop.Name.Substring(2));
+          if (propEntidad != null)
+          {
+            if (!_dtoDestinos.Keys.Any(c => c == prop.Name))
+              _dtoDestinos.Add(prop.Name, new DestinoDtoReferencia<TEntity>(prop).Referencia(propEntidad));
+            if (!_entityDestinos.Keys.Any(c => c == prop.Name))
+              _entityDestinos.Add(prop.Name, new DestinoEntityReferencia<EntityBase, TDto>(propEntidad, _repository).Referencia(prop));
+          }
         }
       }
     }

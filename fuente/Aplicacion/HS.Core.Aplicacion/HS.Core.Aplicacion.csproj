@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{31BEFF87-1B1E-48B5-918E-645577416DF1}</ProjectGuid>
+    <ProjectGuid>{0722AF84-30E5-4489-B9AD-E6DBF51D0EED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HS</RootNamespace>
@@ -45,11 +45,13 @@
     <Compile Include="ICrudService.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="ImplMapper\Destino.cs" />
+    <Compile Include="ImplMapper\DestinoReferencia.cs" />
     <Compile Include="ImplMapper\IDestino.cs" />
     <Compile Include="ImplMapper\IOrigen.cs" />
     <Compile Include="ImplMapper\OrigenConstante.cs" />
     <Compile Include="ImplMapper\OrigenExpresion.cs" />
     <Compile Include="ImplMapper\OrigenPropiedad.cs" />
+    <Compile Include="ImplMapper\OrigenReferencia.cs" />
     <Compile Include="IServiceFactory.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,5 +12,6 @@ namespace HS
     public int Entero { get; set; }
     public int SoloDto { get; set; }
     public int Edad { get; set; }
+    public string IdEstatica { get; set; }
   }
 }

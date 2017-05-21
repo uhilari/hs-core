@@ -19,4 +19,18 @@ namespace HS.ImplMapper
     IDestino Funcion(Expression<Func<TOrigen, TPropiedad>> expr);
     IDestino Propiedad(PropertyInfo propiedad);
   }
+
+  public interface IDestinoDtoReferencia<TOrigen>
+    where TOrigen: EntityBase
+  {
+    IDestino Referencia<TPropiedad>(Expression<Func<TOrigen, TPropiedad>> expr) where TPropiedad: EntityBase;
+    IDestino Referencia(PropertyInfo propiedad);
+  }
+
+  public interface IDestinoEntityReferencia<TPropiedad, TOrigen>
+    where TPropiedad: EntityBase
+  {
+    IDestino Referencia(Expression<Func<TOrigen, string>> expr);
+    IDestino Referencia(PropertyInfo propiedad);
+  }
 }
