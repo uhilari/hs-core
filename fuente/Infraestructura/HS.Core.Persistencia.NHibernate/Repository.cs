@@ -23,6 +23,7 @@ namespace HS
     public void Agregar(T entidad)
     {
       entidad.NoEsNull(nameof(entidad));
+      GestorEventos.LanzarEvento(new Eventos.AntesGrabarEntidad<T>(entidad));
       _session.Save(entidad);
     }
 

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Eventos\AntesGrabarEntidad.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Extensiones.cs" />
