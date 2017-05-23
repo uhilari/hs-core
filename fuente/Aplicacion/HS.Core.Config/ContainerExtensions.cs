@@ -22,30 +22,43 @@ namespace HS
       where TClass: TInterfaz
       where TInterfaz: class
     {
-      return container.Register(Component.For<TInterfaz>().ImplementedBy<TClass>().Interceptors(typeof(UnitOfWorkInterceptor)).LifestyleTransient());
+      var interceptors = new Type[]
+      {
+        typeof(UnitOfWorkInterceptor),
+        typeof(LogInterceptor)
+      };
+      return container.Register(Component.For<TInterfaz>().ImplementedBy<TClass>().Interceptors(interceptors).LifestyleTransient());
+    }
+
+    private static Type[] GetInterceptors()
+    {
+      return new Type[]
+      {
+        typeof(LogInterceptor)
+      };
     }
 
     public static IWindsorContainer RegisterDependency<TClass>(this IWindsorContainer container)
       where TClass: class
     {
-      return container.Register(Component.For<TClass>().LifestyleTransient());
+      return container.Register(Component.For<TClass>().Interceptors(GetInterceptors()).LifestyleTransient());
     }
 
     public static IWindsorContainer RegisterDependency(this IWindsorContainer container, Type tipoClase)
     {
-      return container.Register(Component.For(tipoClase).LifestyleTransient());
+      return container.Register(Component.For(tipoClase).Interceptors(GetInterceptors()).LifestyleTransient());
     }
 
     public static IWindsorContainer RegisterDependency<TInterfaz, TClass>(this IWindsorContainer container)
       where TClass: TInterfaz
       where TInterfaz: class
     {
-      return container.Register(Component.For<TInterfaz>().ImplementedBy<TClass>().LifestyleTransient());
+      return container.Register(Component.For<TInterfaz>().ImplementedBy<TClass>().Interceptors(GetInterceptors()).LifestyleTransient());
     }
 
     public static IWindsorContainer RegisterDependency(this IWindsorContainer container, Type tipoInterfaz, Type tipoClase)
     {
-      return container.Register(Component.For(tipoInterfaz).ImplementedBy(tipoClase).LifestyleTransient());
+      return container.Register(Component.For(tipoInterfaz).ImplementedBy(tipoClase).Interceptors(GetInterceptors()).LifestyleTransient());
     }
 
     public static IWindsorContainer CoreAplicacion(this IWindsorContainer container)
@@ -62,6 +75,7 @@ namespace HS
 
       return container
         .Register(Component.For<IKernel>().Instance(container.Kernel))
+        .Register(Component.For<LogInterceptor>().LifestyleTransient())
         .RegisterDependency(typeof(IValidador<>), typeof(Validador<>));
     }
 
@@ -71,7 +85,6 @@ namespace HS
         .RegisterDependency<IUnitOfWork, NHUnitOfWork>()
         .RegisterDependency(typeof(IRepository<>), typeof(Repository<>))
         .RegisterDependency<IGenericRepository, GenericRepository>();
-
     }
   }
 }

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace HS
 {
-  public interface ILista<T>: IList<T>, ICollection<T> where T: EntityBase
+  public interface ILista<T>: IList<T> where T: EntityBase
   {
+    void Agregar(T entidad);
     T Buscar(Guid id);
     T Buscar(Expression<Func<T, bool>> expresion);
     IEnumerable<T> Filtrar(Expression<Func<T, bool>> expresion);

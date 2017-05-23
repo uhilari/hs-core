@@ -50,6 +50,13 @@ namespace HS
       return entidad;
     }
 
+    public void Agregar(T entidad)
+    {
+      entidad.NoEsNull(nameof(entidad));
+      GestorEventos.LanzarEvento(new Eventos.AntesGrabarEntidad<T>(entidad));
+      base.Add(entidad);
+    }
+
     public T Buscar(Guid id)
     {
       return _Buscar(c => c.Id == id, cr =>

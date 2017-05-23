@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,15 +9,18 @@ namespace HS
 {
   public static class GestorEventos
   {
-    [ThreadStatic]
-    private static IActivadorDeEventos _activador = null;
+    private const string KeyContext = "GESTOR-EVENTOS";
 
-    public static IActivadorDeEventos Activador { get => _activador; set => _activador = value; }
-
-    public static void LanzarEvento(IDomainEvent evento)
+    public static IActivadorDeEventos Activador
     {
-      if (_activador != null)
-        _activador.Activar(evento);
+      get { return (IActivadorDeEventos)CallContext.LogicalGetData(KeyContext); }
+      set { CallContext.LogicalSetData(KeyContext, value); }
+    }
+
+    public static void LanzarEvento<T>(T evento) where T: IDomainEvent
+    {
+      if (Activador != null)
+        Activador.Activar(evento);
     }
   }
 }

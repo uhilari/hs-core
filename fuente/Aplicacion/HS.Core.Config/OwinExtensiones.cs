@@ -19,6 +19,7 @@ namespace HS
       var config = new HttpConfiguration();
       config.DependencyResolver = new WindsorDependencyResolver(container.Kernel);
       cfgContainer?.Invoke(container, config);
+      GestorEventos.Activador = new ActivadorDeEventos(container.Kernel);
       return app
         .Use<HsMiddleware>(container.Kernel)
         .UseWebApi(config);
