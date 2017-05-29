@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CCAA0FD-C844-47D6-B82B-9AB47D4F6907}</ProjectGuid>
+    <ProjectGuid>{23616759-7EC1-4C45-9C03-13A954D9372D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HS</RootNamespace>
@@ -50,11 +50,13 @@
     <Compile Include="FuturoNoEjecutadoException.cs" />
     <Compile Include="GestorEventos.cs" />
     <Compile Include="IActivadorDeEventos.cs" />
+    <Compile Include="IConsultaFactory.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IFuturo.cs" />
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="ILista.cs" />
     <Compile Include="IManejadorDeEvento.cs" />
+    <Compile Include="IConsulta.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IValidacion.cs" />

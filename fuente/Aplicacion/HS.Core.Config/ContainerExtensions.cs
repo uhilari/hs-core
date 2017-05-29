@@ -76,7 +76,8 @@ namespace HS
       return container
         .Register(Component.For<IKernel>().Instance(container.Kernel))
         .Register(Component.For<LogInterceptor>().LifestyleTransient())
-        .RegisterDependency(typeof(IValidador<>), typeof(Validador<>));
+        .RegisterDependency(typeof(IValidador<>), typeof(Validador<>))
+        .RegisterDependency<IConsultaFactory, ConsultaFactory>();
     }
 
     public static IWindsorContainer CorePersistencia(this IWindsorContainer container)

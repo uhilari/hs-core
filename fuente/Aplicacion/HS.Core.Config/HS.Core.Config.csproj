@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivadorDeEventos.cs" />
+    <Compile Include="ConsultaFactory.cs" />
     <Compile Include="ContainerExtensions.cs" />
     <Compile Include="HsMiddleware.cs" />
     <Compile Include="HsNotFoundMiddleware.cs" />

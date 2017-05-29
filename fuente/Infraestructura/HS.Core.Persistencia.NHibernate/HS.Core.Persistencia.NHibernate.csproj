@@ -47,6 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consulta.cs" />
+    <Compile Include="ConsultaHqlEscalar.cs" />
+    <Compile Include="ConsultaHqlLista.cs" />
+    <Compile Include="ConsultaSql.cs" />
+    <Compile Include="ConsultaSqlEscalar.cs" />
+    <Compile Include="ConsultaSqlLista.cs" />
+    <Compile Include="DtoTransform.cs" />
     <Compile Include="Extensiones.cs" />
     <Compile Include="Futuro.cs" />
     <Compile Include="ListaDiferida.cs" />
