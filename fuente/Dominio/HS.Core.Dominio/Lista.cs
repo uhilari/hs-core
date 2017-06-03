@@ -8,11 +8,20 @@ namespace HS
 {
   public class Lista<T> : List<T>, ILista<T> where T : EntityBase
   {
-    public void Agregar(T entidad)
+    public T Agregar(T entidad)
     {
       entidad.NoEsNull(nameof(entidad));
       GestorEventos.LanzarEvento(new Eventos.AntesGrabarEntidad<T>(entidad));
       base.Add(entidad);
+      return entidad;
+    }
+
+    public void AgregarVarios(IEnumerable<T> entidades)
+    {
+      foreach (var item in entidades)
+      {
+        Agregar(item);
+      }
     }
 
     public T Buscar(Guid id)

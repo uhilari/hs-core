@@ -50,11 +50,20 @@ namespace HS
       return entidad;
     }
 
-    public void Agregar(T entidad)
+    public T Agregar(T entidad)
     {
       entidad.NoEsNull(nameof(entidad));
       GestorEventos.LanzarEvento(new Eventos.AntesGrabarEntidad<T>(entidad));
       base.Add(entidad);
+      return entidad;
+    }
+
+    public void AgregarVarios(IEnumerable<T> entidades)
+    {
+      foreach (var item in entidades)
+      {
+        Agregar(item);
+      }
     }
 
     public T Buscar(Guid id)
@@ -87,6 +96,14 @@ namespace HS
         lista = criteria.List<T>();
       }
       return lista;
+    }
+
+    public void ForEach(Action<T> accion)
+    {
+      foreach (var item in this)
+      {
+        accion(item);
+      }
     }
   }
 }

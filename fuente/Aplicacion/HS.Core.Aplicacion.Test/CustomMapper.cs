@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HS
 {
-  public class CustomMapper : Mapper<DtoConcreta, EntidadConcreta>
+  public class CustomMapper : MapperOld<DtoConcreta, EntidadConcreta>
   {
     public CustomMapper(IGenericRepository repository) : base(repository)
     {

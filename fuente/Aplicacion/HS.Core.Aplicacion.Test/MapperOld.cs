@@ -9,17 +9,15 @@ using System.Threading.Tasks;
 
 namespace HS
 {
-  public class Mapper<TDto, TEntity> : IMapper<TDto, TEntity>
+  public class MapperOld<TDto, TEntity> : IMapper<TDto, TEntity>
     where TDto : class, new()
     where TEntity : EntityBase, new()
   {
     private IGenericRepository _repository;
     private IDictionary<string, IDestino> _dtoDestinos = new Dictionary<string, IDestino>();
     private IDictionary<string, IDestino> _entityDestinos = new Dictionary<string, IDestino>();
-    private Action<TDto> _afterMakeDto = _ => { };
-    private Action<TEntity> _afterMakeEntity = _ => { };
 
-    public Mapper(IGenericRepository repository)
+    public MapperOld(IGenericRepository repository)
     {
       _repository = repository;
     }
@@ -57,25 +55,6 @@ namespace HS
       return destino;
     }
 
-    protected IDestinoLista<S, TDto> DestinoEntityLista<S>(Expression<Func<TEntity, IEnumerable<S>>> expression)
-      where S: EntityBase
-    {
-      var propiedad = LambdaHelper.GetPropertyInfo(expression);
-      var destino = new DestinoLista<S, TDto>(propiedad);
-      _entityDestinos.Add(propiedad.Name, destino);
-      return destino;
-    }
-
-    protected void AfterMakeDto(Action<TDto> afterDto)
-    {
-      _afterMakeDto = afterDto;
-    }
-
-    protected void AfterMakeEntity(Action<TEntity> afterEntity)
-    {
-      _afterMakeEntity = afterEntity;
-    }
-
     protected void MapeoAutomatico()
     {
       var propsDto = typeof(TDto).GetProperties();
@@ -101,13 +80,7 @@ namespace HS
             if (!_dtoDestinos.Keys.Any(c => c == prop.Name))
               _dtoDestinos.Add(prop.Name, new DestinoDtoReferencia<TEntity>(prop).Referencia(propEntidad));
             if (!_entityDestinos.Keys.Any(c => c == prop.Name))
-            {
-              var tipoDestino = typeof(DestinoEntityReferencia<,>).MakeGenericType(propEntidad.PropertyType, typeof(TDto));
-              var destino = Activator.CreateInstance(tipoDestino, propEntidad, _repository);
-              var metodo = tipoDestino.GetMethod("Referencia", new Type[] { typeof(PropertyInfo) });
-              metodo.Invoke(destino, new[] { prop });
-              _entityDestinos.Add(prop.Name, (IDestino)destino);
-            }
+              _entityDestinos.Add(prop.Name, new DestinoEntityReferencia<EntityBase, TDto>(propEntidad, _repository).Referencia(prop));
           }
         }
       }
@@ -137,7 +110,6 @@ namespace HS
       {
         item.Value.Ejecutar(res, entity);
       }
-      _afterMakeDto(res);
       return res;
     }
 
@@ -152,7 +124,6 @@ namespace HS
       {
         item.Value.Ejecutar(res, dto);
       }
-      _afterMakeEntity(res);
       return res;
     }
   }

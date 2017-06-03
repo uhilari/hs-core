@@ -10,37 +10,47 @@ namespace HS
     where TDto: class
     where TEntity: EntityBase
   {
-    private IRepository<TEntity> _repository;
-    private IMapper<TDto, TEntity> _mapper;
+    private IMapper<TDto, TEntity> _mapper = null;
 
-    public CrudService(IRepository<TEntity> repository, IMapper<TDto, TEntity> mapper)
+    public CrudService(IRepository<TEntity> repository, IMapperFactory mapperFactory)
     {
-      _repository = repository;
-      _mapper = mapper;
+      Repository = repository;
+      MapperFactory = mapperFactory;
     }
+
+    protected IRepository<TEntity> Repository { get; }
+    protected IMapperFactory MapperFactory { get; }
+    protected IMapper<TDto, TEntity> Mapper => _mapper ?? (_mapper = MapperFactory.GetMapper<TDto, TEntity>());
 
     [UnitOfWork]
     public void Actualizar(string id, TDto dto)
     {
-      _mapper.ActualizarEntity(_repository.BuscarUno(id.Guid()), dto);
+      Mapper.ActualizarEntity(Repository.BuscarUno(id.Guid()), dto);
     }
 
     [UnitOfWork]
     public void Anular(string id)
     {
-      var entity = _repository.BuscarUno(id.Guid());
+      var entity = Repository.BuscarUno(id.Guid());
       entity.Eliminar();
     }
 
     [UnitOfWork]
     public void Crear(TDto dto)
     {
-      _repository.Agregar(_mapper.CrearEntity(dto));
+      Repository.Agregar(Mapper.CrearEntity(dto));
     }
 
     public TDto Get(string id)
     {
-      return _mapper.CrearDto(_repository.BuscarUno(id.Guid()));
+      return Mapper.CrearDto(Repository.BuscarUno(id.Guid()));
+    }
+
+    public IEnumerable<TDto> Listar()
+    {
+      return Repository.BuscarVarios(c => c.Eliminado == false)
+        .Select(c => Mapper.CrearDto(c))
+        .ToList();
     }
   }
 }

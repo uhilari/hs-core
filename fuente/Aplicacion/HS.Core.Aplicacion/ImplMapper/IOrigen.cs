@@ -10,4 +10,11 @@ namespace HS.ImplMapper
   {
     T GetValor(object objeto);
   }
+
+  public interface IOrigenMapper<TDto, TEntity>: IOrigen<IEnumerable<TEntity>>
+    where TDto: class
+    where TEntity: EntityBase
+  {
+    void Mapper(IMapper<TDto, TEntity> mapper);
+  }
 }

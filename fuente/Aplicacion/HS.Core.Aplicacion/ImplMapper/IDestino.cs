@@ -33,4 +33,12 @@ namespace HS.ImplMapper
     IDestino Referencia(Expression<Func<TOrigen, string>> expr);
     IDestino Referencia(PropertyInfo propiedad);
   }
+
+  public interface IDestinoLista<TItemDestino, TOrigen>
+    where TItemDestino: EntityBase
+    where TOrigen: class
+  {
+    IDestino Constante(IEnumerable<TItemDestino> valor);
+    IOrigenMapper<S, TItemDestino> Funcion<S>(Expression<Func<TOrigen, IEnumerable<S>>> expr) where S: class;
+  }
 }

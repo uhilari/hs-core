@@ -17,6 +17,12 @@ namespace HS
       _service = service;
     }
 
+    [Route(""), HttpGet]
+    public IEnumerable<TDto> Listar()
+    {
+      return _service.Listar();
+    }
+
     [Route("{id}"), HttpGet]
     public TDto Obtener(string id)
     {

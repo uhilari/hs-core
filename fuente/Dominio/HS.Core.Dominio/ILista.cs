@@ -9,9 +9,11 @@ namespace HS
 {
   public interface ILista<T>: IList<T> where T: EntityBase
   {
-    void Agregar(T entidad);
+    T Agregar(T entidad);
+    void AgregarVarios(IEnumerable<T> entidades);
     T Buscar(Guid id);
     T Buscar(Expression<Func<T, bool>> expresion);
     IEnumerable<T> Filtrar(Expression<Func<T, bool>> expresion);
+    void ForEach(Action<T> accion);
   }
 }

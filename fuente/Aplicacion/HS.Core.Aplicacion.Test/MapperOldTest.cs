@@ -8,7 +8,7 @@ using Xunit;
 
 namespace HS.Core.Aplicacion.Test
 {
-  public class MapperTest
+  public class MapperOldTest
   {
     public class Base
     {

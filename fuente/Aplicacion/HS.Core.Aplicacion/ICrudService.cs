@@ -12,5 +12,6 @@ namespace HS
     void Crear(T dto);
     void Actualizar(string id, T dto);
     void Anular(string id);
+    IEnumerable<T> Listar();
   }
 }

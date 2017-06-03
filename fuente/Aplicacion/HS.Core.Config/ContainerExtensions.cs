@@ -66,6 +66,7 @@ namespace HS
       return container
         .RegisterDependency<UnitOfWorkInterceptor>()
         .RegisterDependency<IServiceFactory, ServiceFactory>()
+        .RegisterDependency<IMapperFactory, MapperFactory>()
         .RegisterDependency(typeof(IMapper<,>), typeof(Mapper<,>));
     }
 
