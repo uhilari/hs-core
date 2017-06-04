@@ -15,10 +15,11 @@ namespace HS
       return entidad;
     }
 
-    public static void NoEsNull(this string cadena, string nombre)
+    public static string NoEsNull(this string cadena, string nombre)
     {
       if (string.IsNullOrEmpty(cadena))
         throw new ArgumentNullException(nombre);
+      return cadena;
     }
 
     public static string Cadena(this Guid id)

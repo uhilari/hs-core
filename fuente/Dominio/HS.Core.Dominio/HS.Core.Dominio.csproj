@@ -57,6 +57,7 @@
     <Compile Include="ILista.cs" />
     <Compile Include="IManejadorDeEvento.cs" />
     <Compile Include="IConsulta.cs" />
+    <Compile Include="IMapper.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IValidacion.cs" />

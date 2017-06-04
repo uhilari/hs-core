@@ -16,7 +16,8 @@ namespace HS
       Property(c => c.Eliminado);
     }
 
-    public void Lista<TPropiedad>(Expression<Func<T, IEnumerable<TPropiedad>>> propiedad, string key)
+    public void Lista<TPropiedad>(Expression<Func<T, IEnumerable<TPropiedad>>> propiedad, string key, 
+      Action<IBagPropertiesMapper<T, TPropiedad>> actionMapper = null)
       where TPropiedad: EntityBase
     {
       Bag(propiedad, a =>
@@ -24,6 +25,7 @@ namespace HS
         a.Key(k => k.Column(key));
         a.Cascade(Cascade.All);
         a.Type<ListaDiferidaFactory<TPropiedad>>();
+        actionMapper?.Invoke(a);
       }, m => m.OneToMany());
     }
   }

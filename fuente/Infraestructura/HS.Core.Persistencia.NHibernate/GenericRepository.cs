@@ -25,8 +25,10 @@ namespace HS
       Task.WaitAll(_tareas.ToArray());
     }
 
-    public T Get<T>(Guid id) where T: EntityBase
+    public T Get<T>(Guid? id) where T: EntityBase
     {
+      if (!id.HasValue)
+        return null;
       return _session.Get<T>(id).ValidarNoNull();
     }
 

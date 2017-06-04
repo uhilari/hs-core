@@ -44,7 +44,6 @@
     <Compile Include="Extensiones.cs" />
     <Compile Include="ICrudService.cs" />
     <Compile Include="IMapperFactory.cs" />
-    <Compile Include="IMapper.cs" />
     <Compile Include="ImplMapper\Destino.cs" />
     <Compile Include="ImplMapper\DestinoLista.cs" />
     <Compile Include="ImplMapper\DestinoReferencia.cs" />
