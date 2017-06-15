@@ -39,6 +39,9 @@
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -63,6 +66,8 @@
   <ItemGroup>
     <Compile Include="BaseController.cs" />
     <Compile Include="CrudController.cs" />
+    <Compile Include="CustomErrorHandler.cs" />
+    <Compile Include="ErrorExtensions.cs" />
     <Compile Include="HsDirectRouteProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -74,6 +79,10 @@
     <ProjectReference Include="..\..\Aplicacion\HS.Core.Aplicacion\HS.Core.Aplicacion.csproj">
       <Project>{0722af84-30e5-4489-b9ad-e6dbf51d0eed}</Project>
       <Name>HS.Core.Aplicacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dominio\HS.Core.Dominio\HS.Core.Dominio.csproj">
+      <Project>{23616759-7ec1-4c45-9c03-13a954d9372d}</Project>
+      <Name>HS.Core.Dominio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

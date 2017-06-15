@@ -22,11 +22,11 @@ namespace HS
 
     public string RolLista { get; set; }
 
-    private ICriteria _crearCriteria()
+    private ICriteria _crearCriteria<S>() where S: T
     {
       var entry = this.Session.PersistenceContext.GetCollectionEntry(this);
       var persister = entry.LoadedPersister as OneToManyPersister;
-      var criteria = new CriteriaImpl(typeof(T), Session);
+      var criteria = new CriteriaImpl(typeof(S), Session);
       foreach (string columnName in persister.KeyColumnNames)
       {
         criteria.Add(NHibernate.Criterion.Expression.Sql(string.Format("this_.{0} = ?", columnName), Key, NHibernateUtil.Guid));
@@ -34,18 +34,18 @@ namespace HS
       return criteria;
     }
 
-    private T _Buscar(Expression<Func<T, bool>> expresion, Action<ICriteria> agregarFiltro)
+    private S _Buscar<S>(Expression<Func<T, bool>> expresion, Action<ICriteria> agregarFiltro) where S: T
     {
-      T entidad = null;
+      S entidad = null;
       if (base.WasInitialized)
       {
-        entidad = this.FirstOrDefault(expresion.Compile());
+        entidad = this.FirstOrDefault(expresion.Compile()) as S;
       }
       else
       {
-        var criteria = _crearCriteria();
+        var criteria = _crearCriteria<S>();
         agregarFiltro(criteria);
-        entidad = criteria.UniqueResult<T>();
+        entidad = criteria.UniqueResult<S>();
       }
       return entidad;
     }
@@ -68,7 +68,15 @@ namespace HS
 
     public T Buscar(Guid id)
     {
-      return _Buscar(c => c.Id == id, cr =>
+      return _Buscar<T>(c => c.Id == id, cr =>
+      {
+        cr.Add(Restrictions.Eq("Id", id));
+      });
+    }
+
+    public S Buscar<S>(Guid id) where S: T
+    {
+      return _Buscar<S>(c => c.Id == id, cr =>
       {
         cr.Add(Restrictions.Eq("Id", id));
       });
@@ -76,7 +84,15 @@ namespace HS
 
     public T Buscar(Expression<Func<T, bool>> expresion)
     {
-      return _Buscar(expresion, cr =>
+      return _Buscar<T>(expresion, cr =>
+      {
+        cr.Add(Restrictions.Where(expresion));
+      });
+    }
+
+    public S Buscar<S>(Expression<Func<T, bool>> expresion) where S: T
+    {
+      return _Buscar<S>(expresion, cr =>
       {
         cr.Add(Restrictions.Where(expresion));
       });
@@ -91,7 +107,7 @@ namespace HS
       }
       else
       {
-        var criteria = _crearCriteria();
+        var criteria = _crearCriteria<T>();
         criteria.Add(Restrictions.Where(expresion));
         lista = criteria.List<T>();
       }

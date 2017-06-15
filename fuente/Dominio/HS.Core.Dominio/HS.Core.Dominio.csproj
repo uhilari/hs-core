@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseException.cs" />
     <Compile Include="Eventos\AntesGrabarEntidad.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="Error.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="IValidador.cs" />
     <Compile Include="LambdaHelper.cs" />
     <Compile Include="Lista.cs" />
+    <Compile Include="GuidFormatException.cs" />
     <Compile Include="NoRegistroException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

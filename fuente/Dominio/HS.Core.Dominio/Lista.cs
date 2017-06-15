@@ -35,6 +35,16 @@ namespace HS
       return this.FirstOrDefault(expresion.Compile());
     }
 
+    public S Buscar<S>(Guid id) where S: T
+    {
+      return (S)Buscar(id);
+    }
+
+    public S Buscar<S>(Expression<Func<T, bool>> expresion) where S: T
+    {
+      return (S)Buscar(expresion);
+    }
+
     public IEnumerable<T> Filtrar(Expression<Func<T, bool>> expresion)
     {
       expresion.NoEsNull(nameof(expresion));

@@ -155,5 +155,16 @@ namespace HS
       _afterMakeEntity(res);
       return res;
     }
+
+    public ILista<TEntity> CrearEntities(IEnumerable<TDto> dtos)
+    {
+      dtos.NoEsNull(nameof(dtos));
+      var lista = new Lista<TEntity>();
+      foreach (var item in dtos)
+      {
+        lista.Add(CrearEntity(item));
+      }
+      return lista;
+    }
   }
 }

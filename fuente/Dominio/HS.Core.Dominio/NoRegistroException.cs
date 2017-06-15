@@ -4,10 +4,11 @@ using System.Text;
 
 namespace HS
 {
-  public class NoRegistroException : Exception
+  public class NoRegistroException : BaseException
   {
     public NoRegistroException(string tipoEntidad)
     {
+      Codigo = 4040;
       TipoEntidad = tipoEntidad;
     }
 

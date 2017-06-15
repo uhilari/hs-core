@@ -13,5 +13,6 @@ namespace HS
     TDto CrearDto(TEntity entity);
     TEntity CrearEntity(TDto dto);
     void ActualizarEntity(TEntity entity, TDto dto);
+    ILista<TEntity> CrearEntities(IEnumerable<TDto> dtos);
   }
 }

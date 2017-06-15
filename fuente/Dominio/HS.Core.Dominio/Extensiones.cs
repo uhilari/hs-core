@@ -41,13 +41,15 @@ namespace HS
     {
       if (string.IsNullOrEmpty(cadena))
         return false;
+      if (cadena.Length != 22)
+        return false;
       return Regex.IsMatch(cadena, "[a-zA-Z0-9_-]{22}");
     }
 
     public static Guid Guid(this string cadena)
     {
       if (string.IsNullOrEmpty(cadena)) throw new ArgumentNullException(nameof(cadena));
-      if (!EsGuid(cadena)) throw new FormatException();
+      if (!EsGuid(cadena)) throw new GuidFormatException(cadena);
 
       var tmp = cadena.Replace("-", "/")
         .Replace("_", "+");
